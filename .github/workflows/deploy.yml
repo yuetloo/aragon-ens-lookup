@@ -1,0 +1,50 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+
+env:
+  NODE_VERSION: 15.x
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: Install, build
+      run: |
+        yarn install --frozen-lockfile
+        yarn build
+    - name: Cache build
+      uses: actions/cache@v2
+      with:
+        path: ./*
+        key: ${{ github.sha }}
+
+  deploy-website:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: Restore build cache
+      uses: actions/cache@v2
+      with:
+        path: ./*
+        key: ${{ github.sha }}
+    - name: Push to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
