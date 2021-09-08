@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/aragon-ens-lookup/static/js/main.74175a20.chunk.js",
+    "main.js.map": "/aragon-ens-lookup/static/js/main.74175a20.chunk.js.map",
+    "runtime-main.js": "/aragon-ens-lookup/static/js/runtime-main.7ae7d69a.js",
+    "runtime-main.js.map": "/aragon-ens-lookup/static/js/runtime-main.7ae7d69a.js.map",
+    "static/js/2.64b7b34e.chunk.js": "/aragon-ens-lookup/static/js/2.64b7b34e.chunk.js",
+    "static/js/2.64b7b34e.chunk.js.map": "/aragon-ens-lookup/static/js/2.64b7b34e.chunk.js.map",
+    "static/js/3.2a2047a7.chunk.js": "/aragon-ens-lookup/static/js/3.2a2047a7.chunk.js",
+    "static/js/3.2a2047a7.chunk.js.map": "/aragon-ens-lookup/static/js/3.2a2047a7.chunk.js.map",
+    "index.html": "/aragon-ens-lookup/index.html",
+    "static/js/2.64b7b34e.chunk.js.LICENSE.txt": "/aragon-ens-lookup/static/js/2.64b7b34e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7ae7d69a.js",
+    "static/js/2.64b7b34e.chunk.js",
+    "static/js/main.74175a20.chunk.js"
+  ]
+}
