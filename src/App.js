@@ -1,9 +1,28 @@
 import { ensResolve } from '@aragon/wrapper'
 import { useCallback, useEffect, useState } from 'react'
-import { Box, Header, Main, Field, SearchInput } from '@aragon/ui'
+import {
+  Box,
+  Header,
+  Main,
+  Field,
+  SearchInput,
+  IdentityBadge,
+} from '@aragon/ui'
 import { KNOWN_ADDRESSES, KNOWN_NETWORKS } from './constants'
 import Web3 from 'web3'
 import styled from 'styled-components'
+
+function EnsAddress({ error, address, networkType }) {
+  return (
+    <>
+      {error ? (
+        <Error>{error}</Error>
+      ) : (
+        <IdentityBadge entity={address} networkType={networkType} />
+      )}
+    </>
+  )
+}
 
 function App() {
   const [provider, setProvider] = useState(null)
@@ -57,8 +76,7 @@ function App() {
               registryAddress: network.ensRegistry,
             })
           } catch (e) {
-            address = e.message
-            error = true
+            error = e.message
           }
 
           return { ...app, address, error }
@@ -120,7 +138,11 @@ function App() {
         </Field>
 
         <div>
-          {result.error ? <Error>{result.error}</Error> : result.address}
+          <EnsAddress
+            error={result.error}
+            address={result.address}
+            networkType={network.type}
+          />
         </div>
       </Box>
       <Box heading="Known Apps:">
@@ -131,8 +153,13 @@ function App() {
               return (
                 <li key={index}>
                   <Field label={app.name}>
-                    {app.domain} (
-                    {app.error ? <Error>{app.address}</Error> : app.address}))
+                    {app.domain} ({' '}
+                    <EnsAddress
+                      error={app.error}
+                      address={app.address}
+                      networkType={network.type}
+                    />
+                    )
                   </Field>
                 </li>
               )
@@ -147,8 +174,13 @@ function App() {
               return (
                 <li key={index}>
                   <Field label={app.name}>
-                    {app.domain} (
-                    {app.error ? <Error>{app.address}</Error> : app.address})
+                    {app.domain} ({' '}
+                    <EnsAddress
+                      error={app.error}
+                      address={app.address}
+                      networkType={network.type}
+                    />
+                    )
                   </Field>
                 </li>
               )
