@@ -18,7 +18,7 @@ function EnsAddress({ error, address, networkType }) {
       {error ? (
         <Error>{error}</Error>
       ) : (
-        <IdentityBadge entity={address} networkType={networkType} />
+        <IdentityBadge shorten={false} entity={address} networkType={networkType} />
       )}
     </>
   )
