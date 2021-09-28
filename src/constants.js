@@ -31,6 +31,11 @@ export const KNOWN_ADDRESSES = [
     domain: 'reputation-template.aragonpm.eth',
     type: 'template',
   },
+  {
+    name: 'Address Book',
+    domain: 'address-book.aragonpm.eth',
+    type: 'app',
+  },
 ]
 
 export const KNOWN_NETWORKS = new Map([

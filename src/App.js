@@ -1,32 +1,15 @@
 import { ensResolve } from '@aragon/wrapper'
 import { useCallback, useEffect, useState } from 'react'
-import {
-  Box,
-  Header,
-  Main,
-  Field,
-  SearchInput,
-  IdentityBadge,
-} from '@aragon/ui'
+import { Box, Header, Main, Field, SearchInput } from '@aragon/ui'
 import { KNOWN_ADDRESSES, KNOWN_NETWORKS } from './constants'
 import Web3 from 'web3'
-import styled from 'styled-components'
-
-function EnsAddress({ error, address, networkType }) {
-  return (
-    <>
-      {error ? (
-        <Error>{error}</Error>
-      ) : (
-        <IdentityBadge shorten={false} entity={address} networkType={networkType} />
-      )}
-    </>
-  )
-}
+import { KnownApps } from './components/KnownApps'
+import { EnsAddress } from './components/EnsAddress'
+import { Templates } from './components/Templates'
 
 function App() {
   const [provider, setProvider] = useState(null)
-  const [domain, setDomain] = useState('yuetloo.aragonid.eth')
+  const [domain, setDomain] = useState('aragonpm.eth')
   const [result, setResult] = useState({})
   const [knownAddresses, setKnownAddresses] = useState([])
   const [network, setNetwork] = useState({})
@@ -146,52 +129,20 @@ function App() {
         </div>
       </Box>
       <Box heading="Known Apps:">
-        <ol>
-          {knownAddresses
-            .filter((m) => m.type === 'app')
-            .map((app, index) => {
-              return (
-                <li key={index}>
-                  <Field label={app.name}>
-                    {app.domain} ({' '}
-                    <EnsAddress
-                      error={app.error}
-                      address={app.address}
-                      networkType={network.type}
-                    />
-                    )
-                  </Field>
-                </li>
-              )
-            })}
-        </ol>
+        <KnownApps
+          apps={knownAddresses.filter((m) => m.type === 'app')}
+          network={network}
+          provider={provider}
+        />
       </Box>
       <Box heading="Known Templates:">
-        <ol>
-          {knownAddresses
-            .filter((m) => m.type === 'template')
-            .map((app, index) => {
-              return (
-                <li key={index}>
-                  <Field label={app.name}>
-                    {app.domain} ({' '}
-                    <EnsAddress
-                      error={app.error}
-                      address={app.address}
-                      networkType={network.type}
-                    />
-                    )
-                  </Field>
-                </li>
-              )
-            })}
-        </ol>
+        <Templates
+          templates={knownAddresses.filter((m) => m.type === 'template')}
+          network={network}
+        />
       </Box>
     </Main>
   )
 }
 
-const Error = styled.span`
-  color: red;
-`
 export default App
