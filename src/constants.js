@@ -31,11 +31,12 @@ export const KNOWN_ADDRESSES = [
     domain: 'reputation-template.aragonpm.eth',
     type: 'template',
   },
-  {
-    name: 'Address Book',
-    domain: 'address-book.aragonpm.eth',
-    type: 'app',
-  },
+  { domain: 'address-book.aragonpm.eth', name: 'Address Book', type: 'app' },
+  { domain: 'allocations.aragonpm.eth', name: 'Allocations', type: 'app' },
+  { domain: 'discussions.aragonpm.eth', name: 'Discussions', type: 'app' },
+  { domain: 'dot-voting.aragonpm.eth', name: 'Dot Voting', type: 'app' },
+  { domain: 'projects.aragonpm.eth', name: 'Projects', type: 'app' },
+  { domain: 'rewards.aragonpm.eth', name: 'Rewards', type: 'app' },
 ]
 
 export const KNOWN_NETWORKS = new Map([

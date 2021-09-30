@@ -7,10 +7,15 @@ import { KnownApps } from './components/KnownApps'
 import { EnsAddress } from './components/EnsAddress'
 import { Templates } from './components/Templates'
 
+async function getDomainOwner(provider, domain) {
+  return provider.eth.ens.registry.getOwner(domain)
+}
+
 function App() {
   const [provider, setProvider] = useState(null)
   const [domain, setDomain] = useState('aragonpm.eth')
   const [result, setResult] = useState({})
+  const [owner, setOwner] = useState({})
   const [knownAddresses, setKnownAddresses] = useState([])
   const [network, setNetwork] = useState({})
 
@@ -26,8 +31,12 @@ function App() {
         const web3 = new Web3(window.ethereum)
         const id = await web3.eth.getChainId()
         if (!cancel) {
+          const connectedNetwork = KNOWN_NETWORKS.get(id)
+          if (connectedNetwork) {
+            web3.eth.ens.registryAddress = connectedNetwork.ensRegistry
+          }
           setProvider(web3)
-          setNetwork(KNOWN_NETWORKS.get(id) || {})
+          setNetwork(connectedNetwork || {})
         }
       }
 
@@ -82,7 +91,7 @@ function App() {
     let cancel = false
     if (!provider || !domain || !network.ensRegistry) return
 
-    async function fetchDomainAddress() {
+    async function fetchDomainData() {
       try {
         const address = await ensResolve(domain, {
           provider: provider.currentProvider,
@@ -95,9 +104,18 @@ function App() {
       } catch (error) {
         if (!cancel) setResult({ error: error.message })
       }
+
+      try {
+        const domainOwner = await getDomainOwner(provider, domain)
+        if (!cancel) {
+          setOwner({ address: domainOwner })
+        }
+      } catch (err) {
+        if (!cancel) setOwner({ error: err.message })
+      }
     }
 
-    fetchDomainAddress()
+    fetchDomainData()
 
     return () => {
       cancel = true
@@ -116,16 +134,25 @@ function App() {
         secondary={network.name || 'Unsupported network'}
       />
       <Box>
-        <Field label="address for">
+        <Field label="Lookup ENS name">
           <SearchInput wide value={domain} onChange={handleChange} />
         </Field>
 
         <div>
-          <EnsAddress
-            error={result.error}
-            address={result.address}
-            networkType={network.type}
-          />
+          <Field label="address">
+            <EnsAddress
+              error={result.error}
+              address={result.address}
+              networkType={network.type}
+            />
+          </Field>
+          <Field label="owner">
+            <EnsAddress
+              error={owner.error}
+              address={owner.address}
+              networkType={owner.type}
+            />
+          </Field>
         </div>
       </Box>
       <Box heading="Known Apps:">
