@@ -150,7 +150,7 @@ function App() {
             <EnsAddress
               error={owner.error}
               address={owner.address}
-              networkType={owner.type}
+              networkType={network.type}
             />
           </Field>
         </div>
