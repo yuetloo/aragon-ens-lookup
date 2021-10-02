@@ -31,6 +31,7 @@ export const KNOWN_ADDRESSES = [
     domain: 'reputation-template.aragonpm.eth',
     type: 'template',
   },
+  { domain: 'redemptions.aragonpm.eth', name: 'Redemptions', type: 'app' },
   { domain: 'address-book.aragonpm.eth', name: 'Address Book', type: 'app' },
   { domain: 'allocations.aragonpm.eth', name: 'Allocations', type: 'app' },
   { domain: 'discussions.aragonpm.eth', name: 'Discussions', type: 'app' },
