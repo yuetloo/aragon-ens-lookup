@@ -3,7 +3,7 @@ import { Accordion } from '@aragon/ui'
 import { EnsAddress } from './EnsAddress'
 import { Versions } from './Versions'
 
-export function KnownApps({ apps, network, provider }) {
+export function Details({ apps, network, provider }) {
   return (
     <ol>
       {apps.map((app, index) => {

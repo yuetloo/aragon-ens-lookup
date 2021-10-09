@@ -3,9 +3,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { Box, Header, Main, Field, SearchInput } from '@aragon/ui'
 import { KNOWN_ADDRESSES, KNOWN_NETWORKS } from './constants'
 import Web3 from 'web3'
-import { KnownApps } from './components/KnownApps'
+import { Details } from './components/Details'
 import { EnsAddress } from './components/EnsAddress'
-import { Templates } from './components/Templates'
 
 async function getDomainOwner(provider, domain) {
   return provider.eth.ens.registry.getOwner(domain)
@@ -29,19 +28,21 @@ function App() {
 
       async function fetchNetwork() {
         const web3 = new Web3(window.ethereum)
-        const id = await web3.eth.getChainId()
-        if (!cancel) {
-          const connectedNetwork = KNOWN_NETWORKS.get(id)
-          if (connectedNetwork) {
-            web3.eth.ens.registryAddress = connectedNetwork.ensRegistry
+        try {
+          const id = await web3.eth.getChainId()
+          if (!cancel) {
+            const connectedNetwork = KNOWN_NETWORKS.get(id)
+            if (connectedNetwork) {
+              web3.eth.ens.registryAddress = connectedNetwork.ensRegistry
+            }
+            setProvider(web3)
+            setNetwork(connectedNetwork || {})
           }
-          setProvider(web3)
-          setNetwork(connectedNetwork || {})
-        }
+        } catch (err) {}
       }
 
-      fetchNetwork()
       window.ethereum.on('chainChanged', handleChainChanged)
+      fetchNetwork()
 
       return () => {
         cancel = true
@@ -156,16 +157,17 @@ function App() {
         </div>
       </Box>
       <Box heading="Known Apps:">
-        <KnownApps
+        <Details
           apps={knownAddresses.filter((m) => m.type === 'app')}
           network={network}
           provider={provider}
         />
       </Box>
       <Box heading="Known Templates:">
-        <Templates
-          templates={knownAddresses.filter((m) => m.type === 'template')}
+        <Details
+          apps={knownAddresses.filter((m) => m.type === 'template')}
           network={network}
+          provider={provider}
         />
       </Box>
     </Main>

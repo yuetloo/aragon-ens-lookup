@@ -1,15 +1,11 @@
 import { IdentityBadge } from '@aragon/ui'
-import styled from 'styled-components'
-
-const Error = styled.span`
-  color: red;
-`
+import { Error } from './Error'
 
 export function EnsAddress({ error, address, networkType }) {
   return (
     <>
       {error ? (
-        <Error>{error}</Error>
+        <Error message={error} />
       ) : (
         <IdentityBadge
           shorten={false}
