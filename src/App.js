@@ -5,6 +5,7 @@ import { KNOWN_ADDRESSES, KNOWN_NETWORKS } from './constants'
 import Web3 from 'web3'
 import { Details } from './components/Details'
 import { EnsAddress } from './components/EnsAddress'
+import { MetamaskNotInstalled } from './components/MetamaskNotInstalled'
 
 async function getDomainOwner(provider, domain) {
   return provider.eth.ens.registry.getOwner(domain)
@@ -127,6 +128,10 @@ function App() {
     console.log('value', val)
     setDomain(val)
   }, [])
+
+  if (!provider) {
+    return <MetamaskNotInstalled />
+  }
 
   return (
     <Main>
