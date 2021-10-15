@@ -92,4 +92,12 @@ export const KNOWN_NETWORKS = new Map([
       type: 'mumbai',
     },
   ],
+  [
+    421611,
+    {
+      ensRegistry: '0x206edd024d8ac4df5e8953619ea8355b91248af1',
+      name: 'Arbitrum Testnet',
+      type: 'rinkarby',
+    },
+  ],
 ])

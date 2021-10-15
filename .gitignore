@@ -107,3 +107,4 @@ dist
 public/aragon-ui
 
 .vscode
+build/
