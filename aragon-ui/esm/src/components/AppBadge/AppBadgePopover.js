@@ -1,5 +1,5 @@
-import _extends from '../../../node_modules/@babel/runtime/helpers/extends.js';
-import _objectWithoutProperties from '../../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js';
+import _extends_1 from '../../../node_modules/@babel/runtime/helpers/extends.js';
+import objectWithoutProperties from '../../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js';
 import _styled from 'styled-components';
 import React from 'react';
 import ExtendedPropTypes from '../../proptypes.js';
@@ -38,7 +38,7 @@ var AppBadgePopover = /*#__PURE__*/React.memo(function AppBadgePopover(_ref) {
     }),
     link: etherscanUrl && /*#__PURE__*/React.createElement(Link, {
       href: etherscanUrl
-    }, "See on Explorer"),
+    }, "See on Etherscan"),
     onClose: onClose,
     opener: opener,
     popoverAction: popoverAction,
@@ -67,9 +67,9 @@ var _StyledDiv = _styled("div").withConfig({
 
 function Icon(_ref3) {
   var src = _ref3.src,
-      props = _objectWithoutProperties(_ref3, ["src"]);
+      props = objectWithoutProperties(_ref3, ["src"]);
 
-  return /*#__PURE__*/React.createElement(_StyledDiv, _extends({}, props, {
+  return /*#__PURE__*/React.createElement(_StyledDiv, _extends_1({}, props, {
     _css: src
   }));
 }

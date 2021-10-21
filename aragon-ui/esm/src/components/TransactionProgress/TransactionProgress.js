@@ -7,7 +7,7 @@ import Link from '../Link/Link.js';
 import Popover from '../Popover/Popover.js';
 import ProgressBar from '../ProgressBar/ProgressBar.js';
 import Timer from '../Timer/Timer.js';
-import { useTheme } from '../../theme/Theme.js';
+import { useTheme } from '../../theme/Theme2.js';
 import IconCross from '../../icons/components/IconCross.js';
 import { GU } from '../../style/constants.js';
 import { textStyle } from '../../style/text-styles.js';
@@ -119,7 +119,7 @@ var TransactionProgress = /*#__PURE__*/React.memo(function TransactionProgress(_
     _css11: 2 * GU
   }, /*#__PURE__*/React.createElement(Info.Alert, null, "Slow transaction. Retry with more gas")), /*#__PURE__*/React.createElement(_StyledLink, {
     href: transactionHashUrl
-  }, "See on Explorer"))));
+  }, "See on Etherscan"))));
 });
 TransactionProgress.propTypes = {
   endTime: ExtendedPropTypes.instanceOf(Date),
