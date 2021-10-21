@@ -12,7 +12,6 @@ const knownAddresses = []
 for (const addr of KNOWN_ADDRESSES.values()) {
   knownAddresses.push(addr)
 }
-console.log('knownAddresses', knownAddresses)
 
 function App() {
   const [provider, setProvider] = useState(null)
@@ -61,7 +60,6 @@ function App() {
   }, [])
 
   const handleChange = useCallback((val) => {
-    console.log('value', val)
     setDomain(val)
   }, [])
 

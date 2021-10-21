@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { Apm } from '../apm'
-import { Tag, TextCopy, IdentityBadge } from '@aragon/ui'
+import { Tag, Link, IdentityBadge, Field } from '@aragon/ui'
 import styled from 'styled-components'
+
+function toIpfsLink(cid) {
+  return `https://ipfs.io/ipfs/${cid}`
+}
 
 export function Versions({ repo, provider, network }) {
   const [versions, setVersions] = useState(null)
 
-  console.log('in versions', repo)
   useState(() => {
     let cancel = false
 
@@ -14,7 +17,6 @@ export function Versions({ repo, provider, network }) {
       const apm = new Apm(provider)
       try {
         const versionList = await apm.getAllVersions(repo.domain)
-        console.log('versions', versionList)
 
         if (!cancel) setVersions(versionList.reverse())
       } catch (err) {
@@ -31,7 +33,6 @@ export function Versions({ repo, provider, network }) {
   }, [repo, provider])
 
   if (!versions) {
-    console.log('no version')
     return null
   }
 
@@ -44,15 +45,18 @@ export function Versions({ repo, provider, network }) {
       {versions.map((item) => (
         <Box key={item.version}>
           <Tag mode="new">{item.version}</Tag>
-          <div>
-            {item.content.provider}:
-            <TextCopy value={item.content.location}></TextCopy>
-          </div>
-          <IdentityBadge
-            shorten={false}
-            entity={item.contractAddress}
-            networkType={network.type}
-          />
+          <Field label="Contract">
+            <IdentityBadge
+              shorten={false}
+              entity={item.contractAddress}
+              networkType={network.type}
+            />
+          </Field>
+          <Field label="Content">
+            <Link href={toIpfsLink(item.content.location)}>
+              {toIpfsLink(item.content.location)}
+            </Link>
+          </Field>
         </Box>
       ))}
     </div>
