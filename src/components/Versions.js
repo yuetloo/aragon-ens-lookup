@@ -1,32 +1,37 @@
 import { useState } from 'react'
-import APM from '@aragon/apm'
-import { utils } from 'ethers'
-import { Tag, TextCopy } from '@aragon/ui'
-import { EnsAddress } from './EnsAddress'
+import { Apm } from '../apm'
+import { Tag, TextCopy, IdentityBadge } from '@aragon/ui'
 import styled from 'styled-components'
 
 export function Versions({ repo, provider, network }) {
   const [versions, setVersions] = useState(null)
 
+  console.log('in versions', repo)
   useState(() => {
-    async function getVersions() {
-      const apm = await APM(provider, {
-        ensRegistryAddress: network.ensRegistry,
-      })
+    let cancel = false
 
-      const appId = utils.namehash(repo.domain)
+    async function getVersions() {
+      const apm = new Apm(provider)
       try {
-        const versionList = await apm.getAllVersions(appId)
-        setVersions(versionList.reverse())
-      } catch (_) {
-        setVersions([])
+        const versionList = await apm.getAllVersions(repo.domain)
+        console.log('versions', versionList)
+
+        if (!cancel) setVersions(versionList.reverse())
+      } catch (err) {
+        console.log('error', err)
+        if (!cancel) setVersions([])
       }
     }
 
     getVersions()
-  }, [repo, network])
+
+    return () => {
+      cancel = true
+    }
+  }, [repo, provider])
 
   if (!versions) {
+    console.log('no version')
     return null
   }
 
@@ -43,10 +48,11 @@ export function Versions({ repo, provider, network }) {
             {item.content.provider}:
             <TextCopy value={item.content.location}></TextCopy>
           </div>
-          <EnsAddress
-            address={item.contractAddress}
+          <IdentityBadge
+            shorten={false}
+            entity={item.contractAddress}
             networkType={network.type}
-          ></EnsAddress>
+          />
         </Box>
       ))}
     </div>

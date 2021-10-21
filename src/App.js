@@ -1,22 +1,22 @@
-import { ensResolve } from '@aragon/wrapper'
 import { useCallback, useEffect, useState } from 'react'
 import { Box, Header, Main, Field, SearchInput } from '@aragon/ui'
-import { KNOWN_ADDRESSES, KNOWN_NETWORKS } from './constants'
-import Web3 from 'web3'
+import { KNOWN_ADDRESSES } from './constants'
+import { SUPPORTED_NETWORKS } from './networks'
+import { providers } from 'ethers'
 import { Details } from './components/Details'
 import { EnsAddress } from './components/EnsAddress'
+import { EnsOwner } from './components/EnsOwner'
 import { MetamaskNotInstalled } from './components/MetamaskNotInstalled'
 
-async function getDomainOwner(provider, domain) {
-  return provider.eth.ens.registry.getOwner(domain)
+const knownAddresses = []
+for (const addr of KNOWN_ADDRESSES.values()) {
+  knownAddresses.push(addr)
 }
+console.log('knownAddresses', knownAddresses)
 
 function App() {
   const [provider, setProvider] = useState(null)
   const [domain, setDomain] = useState('aragonpm.eth')
-  const [result, setResult] = useState({})
-  const [owner, setOwner] = useState({})
-  const [knownAddresses, setKnownAddresses] = useState([])
   const [network, setNetwork] = useState({})
 
   useEffect(() => {
@@ -28,16 +28,22 @@ function App() {
       }
 
       async function fetchNetwork() {
-        const web3 = new Web3(window.ethereum)
+        const ethersProvider = new providers.Web3Provider(window.ethereum)
         try {
-          const id = await web3.eth.getChainId()
+          const ethersNetwork = await ethersProvider.getNetwork()
           if (!cancel) {
-            const connectedNetwork = KNOWN_NETWORKS.get(id)
-            if (connectedNetwork) {
-              web3.eth.ens.registryAddress = connectedNetwork.ensRegistry
+            const { chainId } = ethersNetwork
+            const supportedNetwork = SUPPORTED_NETWORKS.get(chainId)
+            if (supportedNetwork) {
+              ethersNetwork.ensAddress = supportedNetwork.ensRegistry
+              ethersNetwork.name = supportedNetwork.name
+            } else {
+              console.log('unsupported network', ethersNetwork)
             }
-            setProvider(web3)
-            setNetwork(connectedNetwork || {})
+            setProvider(
+              new providers.Web3Provider(window.ethereum, ethersNetwork)
+            )
+            setNetwork(supportedNetwork || {})
           }
         } catch (err) {}
       }
@@ -53,76 +59,6 @@ function App() {
       }
     }
   }, [])
-
-  useEffect(() => {
-    let cancel = false
-
-    if (!provider || !network.ensRegistry) return
-
-    async function fetchKnownAddresses() {
-      const addresses = await Promise.all(
-        KNOWN_ADDRESSES.map(async (app) => {
-          let address
-          let error
-          try {
-            address = await ensResolve(app.domain, {
-              provider: provider.currentProvider,
-              registryAddress: network.ensRegistry,
-            })
-          } catch (e) {
-            error = e.message
-          }
-
-          return { ...app, address, error }
-        })
-      )
-
-      if (!cancel) {
-        setKnownAddresses(addresses)
-      }
-    }
-
-    fetchKnownAddresses()
-
-    return () => {
-      cancel = true
-    }
-  }, [provider, network])
-
-  useEffect(() => {
-    let cancel = false
-    if (!provider || !domain || !network.ensRegistry) return
-
-    async function fetchDomainData() {
-      try {
-        const address = await ensResolve(domain, {
-          provider: provider.currentProvider,
-          registryAddress: network.ensRegistry,
-        })
-
-        if (!cancel) {
-          setResult({ address })
-        }
-      } catch (error) {
-        if (!cancel) setResult({ error: error.message })
-      }
-
-      try {
-        const domainOwner = await getDomainOwner(provider, domain)
-        if (!cancel) {
-          setOwner({ address: domainOwner })
-        }
-      } catch (err) {
-        if (!cancel) setOwner({ error: err.message })
-      }
-    }
-
-    fetchDomainData()
-
-    return () => {
-      cancel = true
-    }
-  }, [domain, provider, network])
 
   const handleChange = useCallback((val) => {
     console.log('value', val)
@@ -147,15 +83,15 @@ function App() {
         <div>
           <Field label="address">
             <EnsAddress
-              error={result.error}
-              address={result.address}
+              provider={provider}
+              domain={domain}
               networkType={network.type}
             />
           </Field>
           <Field label="owner">
-            <EnsAddress
-              error={owner.error}
-              address={owner.address}
+            <EnsOwner
+              provider={provider}
+              domain={domain}
               networkType={network.type}
             />
           </Field>
