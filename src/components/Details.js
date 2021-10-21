@@ -14,12 +14,11 @@ export function Details({ apps, network, provider }) {
                 items={[
                   [
                     <div>
-                      {app.domain}{' '}
+                      <div>{app.domain}</div>
                       <EnsAddress
                         provider={provider}
                         domain={app.domain}
                         networkType={network.type}
-                        encloseWithParathesis
                       />
                     </div>,
                     <Versions

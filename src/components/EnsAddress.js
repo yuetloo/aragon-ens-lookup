@@ -1,25 +1,13 @@
-import { IdentityBadge } from '@aragon/ui'
+import { IdentityBadge, useViewport } from '@aragon/ui'
 import { useState, useEffect } from 'react'
 import { Error } from './Error'
 
-function Paranthesis({ encloseWithParathesis, children }) {
-  return (
-    <>
-      {encloseWithParathesis ? '(' : ''}
-      {children}
-      {encloseWithParathesis ? ')' : ''}
-    </>
-  )
-}
-
-export function EnsAddress({
-  provider,
-  domain,
-  networkType,
-  encloseWithParathesis,
-}) {
+export function EnsAddress({ provider, domain, networkType }) {
+  const { below } = useViewport()
   const [address, setAddress] = useState('')
   const [error, setError] = useState()
+
+  const shortenAddress = below('medium')
 
   useEffect(() => {
     let cancel = false
@@ -41,22 +29,16 @@ export function EnsAddress({
   }, [provider, domain])
 
   if (error) {
-    return (
-      <Paranthesis encloseWithParathesis={encloseWithParathesis}>
-        <Error message={error} />
-      </Paranthesis>
-    )
+    return <Error message={error} />
   }
 
   if (address) {
     return (
-      <Paranthesis encloseWithParathesis={encloseWithParathesis}>
-        <IdentityBadge
-          shorten={false}
-          entity={address}
-          networkType={networkType}
-        />
-      </Paranthesis>
+      <IdentityBadge
+        shorten={shortenAddress}
+        entity={address}
+        networkType={networkType}
+      />
     )
   }
 
