@@ -20,7 +20,7 @@ export function Versions({ repo, provider, network }) {
 
         if (!cancel) setVersions(versionList.reverse())
       } catch (err) {
-        console.log('error', err)
+        console.log(`error getting versions for ${repo.domain}`, err)
         if (!cancel) setVersions([])
       }
     }

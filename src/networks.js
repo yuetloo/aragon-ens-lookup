@@ -43,8 +43,8 @@ export const SUPPORTED_NETWORKS = new Map([
     1666700000,
     {
       ensRegistry: '0xbc7828fa8665c637901ad5abd5c7e647c9ab140f',
-      name: 'Harmony Testnet 0',
-      type: 'harmonyTest0',
+      name: 'Harmony Testnet',
+      type: 'harmonyTest',
     },
   ],
   [
