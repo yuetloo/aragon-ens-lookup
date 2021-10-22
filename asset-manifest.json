@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/aragon-ens-lookup/static/js/main.59f2d69d.chunk.js",
-    "main.js.map": "/aragon-ens-lookup/static/js/main.59f2d69d.chunk.js.map",
+    "main.js": "/aragon-ens-lookup/static/js/main.ce90e964.chunk.js",
+    "main.js.map": "/aragon-ens-lookup/static/js/main.ce90e964.chunk.js.map",
     "runtime-main.js": "/aragon-ens-lookup/static/js/runtime-main.818dbfa7.js",
     "runtime-main.js.map": "/aragon-ens-lookup/static/js/runtime-main.818dbfa7.js.map",
     "static/js/2.39a68413.chunk.js": "/aragon-ens-lookup/static/js/2.39a68413.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.818dbfa7.js",
     "static/js/2.39a68413.chunk.js",
-    "static/js/main.59f2d69d.chunk.js"
+    "static/js/main.ce90e964.chunk.js"
   ]
 }
