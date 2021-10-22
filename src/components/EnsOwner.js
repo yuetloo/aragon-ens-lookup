@@ -1,10 +1,11 @@
-import { IdentityBadge } from '@aragon/ui'
+import { IdentityBadge, useViewport } from '@aragon/ui'
 import { Contract, utils } from 'ethers'
 import { useState, useEffect } from 'react'
 
 const ensAbi = ['function owner(bytes32 node) external view returns (address)']
 
 export function EnsOwner({ provider, domain, networkType }) {
+  const { below } = useViewport()
   const [owner, setOwner] = useState(null)
 
   useEffect(() => {
@@ -45,6 +46,10 @@ export function EnsOwner({ provider, domain, networkType }) {
   }
 
   return (
-    <IdentityBadge shorten={false} entity={owner} networkType={networkType} />
+    <IdentityBadge
+      shorten={below('medium')}
+      entity={owner}
+      networkType={networkType}
+    />
   )
 }
