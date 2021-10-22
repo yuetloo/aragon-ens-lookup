@@ -5,7 +5,7 @@
   "homepage": "https://yuetloo.github.io/aragon-ens-lookup",
   "dependencies": {
     "@aragon/apm": "^3.1.4",
-    "@aragon/ui": "^1.9.2",
+    "@aragon/ui": "^1.9.3",
     "@aragon/wrapper": "^5.3.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
