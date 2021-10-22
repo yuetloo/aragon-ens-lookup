@@ -14,7 +14,7 @@ export const KNOWN_ADDRESSES = [
   { domain: 'time-lock.aragonpm.eth', name: 'Time Lock', type: 'app' },
   {
     domain: 'token-balance-oracle.aragonpm.eth',
-    name: 'Token Oracle',
+    name: 'Token Balance Oracle',
     type: 'app',
   },
   { domain: 'token-request.aragonpm.eth', name: 'Token Request', type: 'app' },
@@ -26,6 +26,12 @@ export const KNOWN_ADDRESSES = [
   { domain: 'dot-voting.aragonpm.eth', name: 'Dot Voting', type: 'app' },
   { domain: 'projects.aragonpm.eth', name: 'Projects', type: 'app' },
   { domain: 'rewards.aragonpm.eth', name: 'Rewards', type: 'app' },
+  { domain: 'standard-bounties.aragonpm.eth', name: 'Bounties', type: 'app' },
+  {
+    domain: 'minime-factory.aragonpm.eth',
+    name: 'Minime Token Factory',
+    type: 'app',
+  },
 
   {
     name: 'Company',
