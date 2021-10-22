@@ -55,4 +55,12 @@ export const SUPPORTED_NETWORKS = new Map([
       type: 'harmony',
     },
   ],
+  [
+    97,
+    {
+      ensRegistry: '0x843ddfab8406e752d03fa75dbb275070f368658d',
+      name: 'Bsc Testnet',
+      type: 'bscTest',
+    },
+  ],
 ])
