@@ -63,4 +63,20 @@ export const SUPPORTED_NETWORKS = new Map([
       type: 'bscTest',
     },
   ],
+  [
+    588,
+    {
+      ensRegistry: '0x843ddfab8406e752d03fa75dbb275070f368658d',
+      name: 'Metis Stardust Testnet',
+      type: 'stardust',
+    },
+  ],
+  [
+    1088,
+    {
+      ensRegistry: '0x843ddfab8406e752d03fa75dbb275070f368658d',
+      name: 'Metis Andromeda Mainnet',
+      type: 'andromeda',
+    },
+  ],
 ])
